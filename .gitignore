@@ -1,0 +1,30 @@
+# Ignore dataset folders (IMPORTANT)
+Train/
+Test/
+*.jpg
+*.png
+*.jpeg
+*.nii
+*.nii.gz
+
+# Jupyter files
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Training outputs (optional)
+outputs/*.pth
+outputs/*.png
+outputs/*.json
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
