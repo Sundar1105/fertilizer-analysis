@@ -1,29 +1,63 @@
-## Web Application
+# Brain Tumor Detection using DenseNet121
 
-The project includes a complete Flask web application with:
+Deep learning model to classify brain MRI images into 4 categories:
+- **Glioma**
+- **Meningioma**
+- **No Tumor**  
+- **Pituitary**
 
-- **User Authentication**: Registration and login system
-- **MRI Upload**: Upload brain MRI images for analysis
-- **Real-time Prediction**: DenseNet121 model for tumor classification
-- **Grad-CAM Visualization**: Heatmap overlay showing tumor location
-- **Tumor Information**: Detailed info about each tumor type including:
-  - Symptoms, causes, treatment options
-  - Prevention tips and prognosis
-- **User Dashboard**: View prediction history
-- **Profile Management**: Update personal information
+## Dataset
+This project uses the **Brain Tumor MRI Dataset** from Kaggle:
+- [Dataset Link](https://www.kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset)
 
-### Run the Web App
 
+### Dataset Setup
+1. Download dataset from Kaggle
+2. Extract to project directory:
+
+
+File Structure:
+
+brain-tumor-detection/
+├── Train/
+│ ├── glioma/
+│ ├── meningioma/
+│ ├── notumor/
+│ └── pituitary/
+└── Test/
+├── glioma/
+├── meningioma/
+├── notumor/
+└── pituitary/
+
+
+## Model Architecture
+- **Base**: DenseNet121 (pretrained on ImageNet)
+- **Custom Head**: Dropout (0.4) → Linear(512) → ReLU → BatchNorm → Dropout (0.3) → Linear(4)
+- **Training Strategy**: Transfer learning with warmup fine-tuning
+
+## Results
+| Metric | Value |
+|--------|-------|
+| Test Accuracy | 76.75% |
+| Macro AUC | 0.9327 |
+
+### Per-class Performance
+| Class | Precision | Recall | F1-Score |
+|-------|-----------|--------|-----------|
+| Glioma | 0.6573 | 0.8200 | 0.7297 |
+| Meningioma | 0.7834 | 0.4250 | 0.5511 |
+| No Tumor | 0.8668 | 0.9600 | 0.9110 |
+| Pituitary | 0.7846 | 0.8650 | 0.8228 |
+
+## Requirements
 ```bash
-# Install dependencies
 pip install -r requirements.txt
 
-# Run the Flask application
-python app.py
-
-# Open browser and navigate to
-http://localhost:5000
-
-
-Dataset Link:
-url = {https://www.kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset}
+@misc{brain_tumor_mri_dataset,
+  author = {Masoud Nickparvar},
+  title = {Brain Tumor MRI Dataset},
+  year = {2024},
+  publisher = {Kaggle},
+  url = {https://www.kaggle.com/datasets/masoudnickparvar/brain-tumor-mri-dataset}
+}
