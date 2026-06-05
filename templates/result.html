@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% block title %}Result — BrainScan AI{% endblock %}
+{% block page_title %}Prediction Result{% endblock %}
+
+{% block content %}
+{% set info = result.info %}
+
+<!-- ── RESULT HEADER ──────────────────────────────────────────────────────── -->
+<div class="result-hero badge-{{ info.badge }}">
+  <div class="result-hero-left">
+    <div class="result-icon-big">{{ info.icon }}</div>
+    <div>
+      <div class="result-label">Detected Condition</div>
+      <h2 class="result-class">{{ info.label }}</h2>
+      <span class="badge badge-{{ info.badge }}">{{ info.severity }} Severity</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── IMAGES ROW ─────────────────────────────────────────────────────────── -->
+<div class="images-row">
+  <div class="img-card">
+    <div class="img-label"><i class="fa fa-image"></i> Original MRI</div>
+    <img src="{{ image_url }}" alt="Original MRI" class="scan-img"/>
+  </div>
+
+  {% if result.gradcam %}
+  <div class="img-card">
+    <div class="img-label"><i class="fa fa-fire"></i> Grad-CAM Heatmap</div>
+    <img src="data:image/png;base64,{{ result.gradcam.heatmap }}" alt="Heatmap" class="scan-img"/>
+  </div>
+  <div class="img-card">
+    <div class="img-label"><i class="fa fa-layer-group"></i> Overlay</div>
+    <img src="data:image/png;base64,{{ result.gradcam.overlay }}" alt="Overlay" class="scan-img"/>
+  </div>
+  {% else %}
+  <div class="img-card no-gradcam">
+    <i class="fa fa-circle-check"></i>
+    <p>No Tumor Detected</p>
+    <small>Grad-CAM not generated for normal scans</small>
+  </div>
+  {% endif %}
+</div>
+
+<!-- ── DESCRIPTION ───────────────────────────────────────────────────────── -->
+<div class="info-section-grid">
+
+  <div class="info-section-card">
+    <h3><i class="fa fa-circle-info"></i> About This Condition</h3>
+    <p>{{ info.description }}</p>
+    <div class="prognosis-box">
+      <i class="fa fa-stethoscope"></i>
+      <div>
+        <strong>Prognosis</strong>
+        <p>{{ info.prognosis }}</p>
+      </div>
+    </div>
+  </div>
+
+  {% if info.symptoms %}
+  <div class="info-section-card">
+    <h3><i class="fa fa-notes-medical"></i> Common Symptoms</h3>
+    <ul class="info-list red">
+      {% for s in info.symptoms %}
+        <li><i class="fa fa-circle-dot"></i> {{ s }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+</div>
+
+<div class="info-section-grid">
+
+  {% if info.causes %}
+  <div class="info-section-card">
+    <h3><i class="fa fa-dna"></i> Possible Causes</h3>
+    <ul class="info-list orange">
+      {% for c in info.causes %}
+        <li><i class="fa fa-circle-dot"></i> {{ c }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <div class="info-section-card">
+    <h3><i class="fa fa-pills"></i> Treatment Options</h3>
+    <ul class="info-list blue">
+      {% for t in info.treatment %}
+        <li><i class="fa fa-circle-dot"></i> {{ t }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+</div>
+
+<div class="info-section-grid">
+  <div class="info-section-card full-width">
+    <h3><i class="fa fa-shield-heart"></i> Prevention & Lifestyle Tips</h3>
+    <div class="prevention-grid">
+      {% for p in info.prevention %}
+      <div class="prev-item">
+        <i class="fa fa-check-circle"></i>
+        <span>{{ p }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<!-- ── ACTION BUTTONS ─────────────────────────────────────────────────────── -->
+<div class="result-actions">
+  <a href="{{ url_for('predict') }}" class="btn-primary">
+    <i class="fa fa-arrow-rotate-left"></i> Analyse Another Scan
+  </a>
+  <a href="{{ url_for('dashboard') }}" class="btn-outline">
+    <i class="fa fa-gauge-high"></i> Back to Dashboard
+  </a>
+  <button onclick="window.print()" class="btn-outline">
+    <i class="fa fa-print"></i> Print Report
+  </button>
+</div>
+
+<!-- ── DISCLAIMER ─────────────────────────────────────────────────────────── -->
+<div class="disclaimer">
+  <i class="fa fa-triangle-exclamation"></i>
+  <strong>Medical Disclaimer:</strong> This AI prediction is for educational and
+  research purposes only. Please consult a qualified neurologist or radiologist
+  for clinical diagnosis and treatment decisions.
+</div>
+
+{% endblock %}

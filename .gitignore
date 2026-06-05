@@ -1,30 +1,15 @@
-# Ignore dataset folders (IMPORTANT)
-Train/
-Test/
-*.jpg
-*.png
-*.jpeg
-*.nii
-*.nii.gz
+# Database (keep structure but not data)
+users.db
+*.db
 
-# Jupyter files
-.ipynb_checkpoints/
-*.ipynb_checkpoints
-
-# Training outputs (optional)
-outputs/*.pth
-outputs/*.png
-outputs/*.json
+# Uploaded images (keep folder but not files)
+static/uploads/*
+!static/uploads/.gitkeep
 
 # Python cache
 __pycache__/
 *.pyc
-*.pyo
 
-# IDE files
-.vscode/
-.idea/
-
-# OS files
-.DS_Store
-Thumbs.db
+# Environment variables
+.env
+*.env
