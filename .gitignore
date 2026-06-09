@@ -13,36 +13,15 @@ venv.bak/
 # Jupyter Notebook
 .ipynb_checkpoints/
 *.ipynb_checkpoints
-*.ipynb
+*.ipynb~ 
 
-# Training artifacts
-*.pth
-*.pt
+# Model files (optional - remove if you want to track models)
 *.pkl
-*.h5
-*.hdf5
-*.ckpt
-*.pth.tar
-best_*.pth
-model_*.pth
+*.joblib
 
-# Dataset (large files - download from Kaggle instead)
-Dataset/
-CT-KIDNEY-DATASET-Normal-Cyst-Tumor-Stone/
-*.jpg
-*.jpeg
-*.png
-*.dcm
-*.dicom
-*.tiff
-*.zip
-*.tar
-*.tar.gz
-*.7z
-
-# Kaggle credentials
-kaggle.json
-.kaggle/
+# Data files
+datasets/*.csv
+!datasets/.gitkeep
 
 # IDE
 .vscode/
@@ -50,22 +29,13 @@ kaggle.json
 *.swp
 *.swo
 *~
-.DS_Store
-
-# Logs and outputs
-*.log
-outputs/
-logs/
-runs/
-results/
-predictions/
-
-# Environment
-requirements.txt
-environment.yml
-Pipfile
-Pipfile.lock
 
 # OS
-Thumbs.db
 .DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Compiled files
+*.pyc
